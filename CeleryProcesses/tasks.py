@@ -1,4 +1,4 @@
-from celery import Celery
+from celery import shared_task 
 from celery.signals import worker_process_init, worker_process_shutdown
 
 import sys
@@ -6,12 +6,7 @@ sys.path.append('..')
 from mpgameservices.model.game_manager import deserialize_hand
 
 import functools
-from typing import Callable
-
-redis_conn = None
-
-app = Celery(__name__)
-app.config_from_object('celeryconfig')
+from typing import Callable 
 
 
 # @worker_process_init.connect
@@ -27,4 +22,7 @@ app.config_from_object('celeryconfig')
 #     #     db_conn.close()
 #     print ("Worker finished!")
 
-    
+@shared_task(name="tasks.add_together")
+def add_together (x, y):
+    return x + y
+

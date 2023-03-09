@@ -1,7 +1,12 @@
 from flask import Flask
-from socketio import SocketIO
+from flask_socketio import SocketIO
 
-import events
+import sys
+sys.path.append('..')
+from CeleryProcesses.celery_factory import create_celery
+
+import Controller.events as events
+import Controller.routes as routes
 
 def create_app(config_path: str = None) -> Flask:
     app = Flask(__name__)
@@ -15,5 +20,9 @@ def create_app(config_path: str = None) -> Flask:
     # Will have middlewares, auth, etc. later
 
     app.register_blueprint(events.blueprint)
+    app.register_blueprint(routes.blueprint)
+
+    celery = create_celery(app)
+    app.celery = celery
 
     return app
