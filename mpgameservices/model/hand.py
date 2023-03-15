@@ -1,14 +1,15 @@
-from typing import List, Generator, Tuple, Dict
+from typing import List, Generator, Tuple
 from pokerface import Stakes, NoLimitTexasHoldEm, PokerPlayer, Card, PokerNature
 from .player import Player
 
 class Hand:
 
-    def __init__ (self, betting_order: List[Player], sb: float, bb: float, ante: float, actions: Dict):
+    def __init__ (self, betting_order: List[Player], sb: float, bb: float, ante: float, actions: List[str]):
         # Just assume NL Texas Holdem for now
         self._game = NoLimitTexasHoldEm(Stakes(ante, (sb, bb)), Hand._get_stacks(betting_order))
         self._index_player_map = dict(zip(list(range(len(betting_order))), betting_order))
-        self._game.act(actions)
+        self._actions_string = actions
+        self._game.act(*actions)
 
     # STATIC METHODS
     def _get_stacks (players: List[Player]) -> List[float]:
@@ -45,7 +46,10 @@ class Hand:
         player_index = 0
         while self._game.nature.can_deal_hole():
             self._game.nature.deal_hole()
-            yield self._game.players[0].hole
+            holes = self._game.players[player_index].hole
+            self._actions_string.append(f'dh {holes[0].__repr__()}{holes[1].__repr__()}') 
+            player_index += 1
+            yield holes
 
     def deal_board (self) -> List[Card]:
         self._game.nature.deal_board()
@@ -62,5 +66,6 @@ class Hand:
         else:
             player.bet_raise(amount)
 
-    
+    def get_actions (self) -> List[str]:
+        return self._actions_string
 
