@@ -1,0 +1,63 @@
+This is how the backend will work:
+
+- There will be a socket server with connections to each client
+- Authentication is done in a single http exchange with Flask-Login before the client opens the socket connection
+- The current hand, as well as inter-hand data will be stored in redis. The current hand will be stored as a .act-parsable string in redis
+- Redis message queue will mediate between socketio and a celery app
+- The celery worker will perform tasks that do the game logic, update the game state in redis, and emit events back to the clients
+
+Other stuff:
+    - Any db calls should be written in mplib, not here
+    - The game container will be initialized with its table_id. Assumed to be an env var right now
+        - It can deduce everything else it needs from making db calls (through mplib)
+
+To-Do's (Old):
+    0. Read up on pokerface .act method so we can just store the string to parse to rebuild the pokergame on task start
+    1. Write socketio server routes, figure out how to namespace properly, etc.
+    2. Write logic for playing one hand
+    3. Add redis so that we can persist data between hands
+    4. Write remaining logic so that we can play a full game
+    5. Dockerize the backend
+    6. Write tests :(
+    7. Write frontend code so we can see it, demo, etc.
+
+To-Do's (March 16, 2023):
+    1. Add auth- it will be easier to test the game if we have real fake users in a db
+        - Write the SQL
+        - Connect SQLAlchemy to PostgreSQL
+        - Update mplib accordingly
+        - Add Flask-Login
+        - Make some test users
+    2. Move frontend over to full redux, use slices, etc.
+        - Move any large states over to datastore
+        - Test with redux dev tool
+    3. Write out Login -> Game View frontend code, and hook up to backend auth
+        - Render login form
+        - Wire login form to Flask-Login
+            - Try test user
+        - Make sure cookies work
+        - Render register form
+        - Wire to backend
+        - Write transition to game
+            - Likely just a connect button with a hardcoded ip
+    4. Start adding frontend event handlers
+        - Get initial http login to work
+            - Use same controller for now
+        - Implement connect
+        - Write hand/game state shape
+        - Implement add_player and deal
+        - Continue from there
+    5. Add backend event handlers
+        - Implement connect
+        - Write create_public_data
+        - Write add_player and deal
+        - Continue until game logic is sound
+    6. Demo Time!
+
+Distant Future:
+    - Add auth
+    - Add compliance
+    - Add stripe or other
+    - Add support / ticketing system
+    - Add professional ux/ui
+    - Demo and look for funding
