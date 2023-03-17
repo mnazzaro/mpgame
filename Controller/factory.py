@@ -5,6 +5,9 @@ import sys
 sys.path.append('..')
 from CeleryProcesses.celery_factory import create_celery
 
+sys.path.append('../..')
+from mplib.auth import Auth
+
 import Controller.events as events
 import Controller.routes as routes
 
@@ -15,9 +18,11 @@ def create_app(config_path: str = None) -> Flask:
         else 'config.py'
     )
 
-    sio = SocketIO(app)
+    print (app.config['SERVICE_TYPE_FOR_AUTH'])
 
-    # Will have middlewares, auth, etc. later
+    Auth(app)
+
+    sio = SocketIO(app)
 
     app.register_blueprint(events.blueprint)
     app.register_blueprint(routes.blueprint)

@@ -23,11 +23,11 @@ To-Do's (Old):
 
 To-Do's (March 16, 2023):
     1. Add auth- it will be easier to test the game if we have real fake users in a db
-        - Write the SQL
-        - Connect SQLAlchemy to PostgreSQL
-        - Update mplib accordingly
-        - Add Flask-Login
-        - Make some test users
+        - Write the SQL [✔]
+        - Connect SQLAlchemy to PostgreSQL [✔]
+        - Update mplib accordingly [✔]
+        - Add Flask-Login [✔]
+        - Make some test users [x]
     2. Move frontend over to full redux, use slices, etc.
         - Move any large states over to datastore
         - Test with redux dev tool
