@@ -27,7 +27,7 @@ To-Do's (March 16, 2023):
         - Connect SQLAlchemy to PostgreSQL [✔]
         - Update mplib accordingly [✔]
         - Add Flask-Login [✔]
-        - Make some test users [x]
+        - Make some tests [x]
     2. Move frontend over to full redux, use slices, etc.
         - Move any large states over to datastore
         - Test with redux dev tool

@@ -4,7 +4,7 @@ import sys
 sys.path.append('..')
 from mpgameservices.model.player import Player
 from mplib.auth.auth_user import AuthUser
-from mplib.auth.authenticate import try_login
+from mplib.auth.authentication import try_login
 # from mplib.game.authorize import authorize_player_for_table
 
 blueprint = Blueprint('routes', __name__, '')
