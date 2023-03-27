@@ -9,7 +9,7 @@ from functools import wraps
 
 import logging
 
-from Controller.socket_blueprint import SocketBlueprint
+from .socket_blueprint import SocketBlueprint
 
 blueprint = SocketBlueprint ('events', __name__)
 logger = logging.Logger(__name__)

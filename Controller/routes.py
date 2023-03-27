@@ -1,8 +1,9 @@
 from flask import request, Blueprint, current_app
 
+from ..mpgameservices.model.player import Player
+
 import sys
 sys.path.append('..')
-from mpgameservices.model.player import Player
 from mplib.auth.auth_user import AuthUser
 from mplib.auth.authentication import try_login
 # from mplib.game.authorize import authorize_player_for_table
@@ -16,11 +17,14 @@ def login ():
         email = request.form['email']
         password = request.form['password']
         result = try_login(AuthUser(email, password, None))
+        if result:
+            return {"result": True}, 200
+        else:
+            return {"result": False}, 403
+        
         # TODO: Add authorize_player_for_table when we move to cookies
     except:
-        return {"result": False}, 403
-    if result:
-        return {"result": True}, 200
+        return {"result": False}, 500
 
 
 @blueprint.route('/add', methods=['GET'])

@@ -3,13 +3,13 @@ from flask_socketio import SocketIO
 
 import sys
 sys.path.append('..')
-from CeleryProcesses.celery_factory import create_celery
+from ..CeleryProcesses.celery_factory import create_celery
 
 sys.path.append('../..')
 from mplib.auth import Auth
 
-import Controller.events as events
-import Controller.routes as routes
+from .events import blueprint as events_bp
+from .routes import blueprint as routes_bp
 
 def create_app(config_path: str = None) -> Flask:
     app = Flask(__name__)
@@ -24,8 +24,8 @@ def create_app(config_path: str = None) -> Flask:
 
     sio = SocketIO(app)
 
-    app.register_blueprint(events.blueprint)
-    app.register_blueprint(routes.blueprint)
+    app.register_blueprint(events_bp)
+    app.register_blueprint(routes_bp)
 
     celery = create_celery(app)
     app.celery = celery

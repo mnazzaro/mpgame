@@ -22,37 +22,39 @@ To-Do's (Old):
     7. Write frontend code so we can see it, demo, etc.
 
 To-Do's (March 16, 2023):
-    1. Add auth- it will be easier to test the game if we have real fake users in a db
+    1. Add auth- it will be easier to test the game if we have real fake users in a db [✔]
         - Write the SQL [✔]
         - Connect SQLAlchemy to PostgreSQL [✔]
         - Update mplib accordingly [✔]
         - Add Flask-Login [✔]
-        - Make some tests [x]
-    2. Move frontend over to full redux, use slices, etc.
-        - Move any large states over to datastore
-        - Test with redux dev tool
-    3. Write out Login -> Game View frontend code, and hook up to backend auth
-        - Render login form
-        - Wire login form to Flask-Login
-            - Try test user
-        - Make sure cookies work
-        - Render register form
-        - Wire to backend
-        - Write transition to game
-            - Likely just a connect button with a hardcoded ip
-    4. Start adding frontend event handlers
-        - Get initial http login to work
-            - Use same controller for now
-        - Implement connect
-        - Write hand/game state shape
-        - Implement add_player and deal
-        - Continue from there
-    5. Add backend event handlers
-        - Implement connect
-        - Write create_public_data
-        - Write add_player and deal
-        - Continue until game logic is sound
-    6. Demo Time!
+        - Make some tests [✔]
+            - Make tests for auth [✔]
+            - Make tests for mpgame controller [✔]
+    2. Move frontend over to full redux, use slices, etc. [x]
+        - Move any large states over to datastore [x]
+        - Test with redux dev tool [x]
+    3. Write out Login -> Game View frontend code, and hook up to backend auth [x]
+        - Render login form [x]
+        - Wire login form to Flask-Login [x]
+            - Try test user [x]
+        - Make sure cookies work [x]
+        - Render register form [x]
+        - Wire to backend [x]
+        - Write transition to game [x]
+            - Likely just a connect button with a hardcoded ip [x]
+    4. Start adding frontend event handlers [x]
+        - Get initial http login to work [x]
+            - Use same controller for now [x]
+        - Implement connect [x]
+        - Write hand/game state shape [x]
+        - Implement add_player and deal [x]
+        - Continue from there [x]
+    5. Add backend event handlers [x]
+        - Implement connect [x]
+        - Write create_public_data [x]
+        - Write add_player and deal [x]
+        - Continue until game logic is sound [x]
+    6. Demo Time! [x]
 
 Distant Future:
     - Add auth
