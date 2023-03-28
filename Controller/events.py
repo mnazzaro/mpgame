@@ -1,6 +1,6 @@
 from typing import Callable
 
-from flask import request
+from flask import request, current_app
 from flask_socketio import emit, ConnectionRefusedError, disconnect
 from flask_login import current_user
 # from model.game_manager import GameManager
@@ -18,9 +18,11 @@ def login_required (func: Callable) -> Callable:
 
     @wraps(func)
     def wrapped (*args, **kwargs):
-        if current_user.is_authenticated():
-            return func(*args, **kwargs)
-        disconnect()
+        with current_app.app_context():
+            print (current_user.is_authenticated())
+            if current_user.is_authenticated():
+                return func(*args, **kwargs)
+            disconnect()
 
     return wrapped
 

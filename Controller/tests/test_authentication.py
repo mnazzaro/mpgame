@@ -57,7 +57,7 @@ class TestAuthenticationController (TestCase):
     def test_login_success (self):
         with self.app.app_context():
             with self.client as client:
-                response = client.post('/login', data={
+                response = client.post('/login', json={
                     'email': 'marknazzaro2@gmail.com',
                     'password': 'passw0rD!'
                 })
@@ -67,7 +67,7 @@ class TestAuthenticationController (TestCase):
     def test_login_wrong_pass (self):
         with self.app.app_context():
             with self.client as client:
-                response = client.post('/login', data={
+                response = client.post('/login', json={
                     'email': 'marknazzaro2@gmail.com',
                     'password': 'wrong_password'
                 })
@@ -77,7 +77,7 @@ class TestAuthenticationController (TestCase):
     def test_login_unmatched_email (self):
         with self.app.app_context():
             with self.client as client:
-                response = client.post('/login', data={
+                response = client.post('/login', json={
                     'email': 'badguy@gmail.com',
                     'password': 'evil_password'
                 })

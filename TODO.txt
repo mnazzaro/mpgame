@@ -30,21 +30,26 @@ To-Do's (March 16, 2023):
         - Make some tests [✔]
             - Make tests for auth [✔]
             - Make tests for mpgame controller [✔]
-    2. Move frontend over to full redux, use slices, etc. [x]
-        - Move any large states over to datastore [x]
-        - Test with redux dev tool [x]
+    2. Move frontend over to full redux, use slices, etc. [✔]
+        - Move any large states over to datastore [✔]
+        - Test with redux dev tool [✔]
     3. Write out Login -> Game View frontend code, and hook up to backend auth [x]
-        - Render login form [x]
-        - Wire login form to Flask-Login [x]
-            - Try test user [x]
+        - Render login form [✔]
+        - Wire login form to Flask-Login [✔]
+            - Try test user [✔]
         - Make sure cookies work [x]
+            - Update DB as appropriate for JWT auth [x]
+            - Rewrite UserMixin [x]
+            - Add JWT auth [x]
+            - Decouple mpgame controller from mplib auth [x]
+            - Write tests for http and socket [x]
         - Render register form [x]
-        - Wire to backend [x]
-        - Write transition to game [x]
-            - Likely just a connect button with a hardcoded ip [x]
+        - Wire to backend [✔]
+        - Write transition to game [✔]
+            - Likely just a connect button with a hardcoded ip [✔]
     4. Start adding frontend event handlers [x]
-        - Get initial http login to work [x]
-            - Use same controller for now [x]
+        - Get initial http login to work [✔]
+            - Use same controller for now [✔]
         - Implement connect [x]
         - Write hand/game state shape [x]
         - Implement add_player and deal [x]
@@ -63,3 +68,7 @@ Distant Future:
     - Add support / ticketing system
     - Add professional ux/ui
     - Demo and look for funding
+
+THINGS TO REMEMBER:
+    - We are using /login route for both classic login, as well as session verification and set-up for game socket
+        - This will need to be separated later when they aren't the same thing, or maybe cookies will take care of all this

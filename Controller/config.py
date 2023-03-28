@@ -1,7 +1,12 @@
 SERVICE_TYPE_FOR_AUTH = 'GAME'
 
+SECRET_KEY = 'super_secret_key'
+
 CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
 CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
 
-SQLALCHEMY_DATABASE_URI = 'postgresql://markn@localhost/mpdb'
+# SQLALCHEMY_DATABASE_URI = 'postgresql://markn@localhost/mpdb'
+SQLALCHEMY_DATABASE_URI = 'postgresql://test:test@localhost/mpdb'
 SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+CREATE_DB = True

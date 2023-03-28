@@ -1,12 +1,12 @@
 from flask import Flask
 from flask_socketio import SocketIO
 
-import sys
-sys.path.append('..')
 from ..CeleryProcesses.celery_factory import create_celery
 
+import sys
 sys.path.append('../..')
 from mplib.auth import Auth
+from mplib.model.util import create_all, drop_all
 
 from .events import blueprint as events_bp
 from .routes import blueprint as routes_bp
@@ -22,12 +22,16 @@ def create_app(config_path: str = None) -> Flask:
 
     Auth(app)
 
-    sio = SocketIO(app)
+    sio = SocketIO(app, cors_allowed_origins="*") # TODO: This will not fly in prod. Should be okay for now because we will work on that logic in the pairing service later
 
     app.register_blueprint(events_bp)
     app.register_blueprint(routes_bp)
 
     celery = create_celery(app)
     app.celery = celery
+
+    if app.config['CREATE_DB']:
+        with app.app_context():
+            create_all()
 
     return app

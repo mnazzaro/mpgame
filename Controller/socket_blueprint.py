@@ -1,4 +1,4 @@
-from socketio import Client
+from flask_socketio import SocketIO
 from flask import Blueprint
 
 class SocketBlueprint(Blueprint):
@@ -11,7 +11,7 @@ class SocketBlueprint(Blueprint):
         self.record_once(self.init_socketio)
 
     def init_socketio (self, state):
-        self.socketio: Client = state.app.extensions['socketio']
+        self.socketio: SocketIO = state.app.extensions['socketio']
         for f in self._socketio_handlers:
             f(self.socketio)
         return self.socketio
