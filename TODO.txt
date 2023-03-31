@@ -50,8 +50,8 @@ To-Do's (March 16, 2023):
     4. Start adding frontend event handlers [x]
         - Get initial http login to work [✔]
             - Use same controller for now [✔]
-        - Implement connect [x]
-        - Write hand/game state shape [x]
+        - Implement connect [✔]
+        - Write hand/game state shape [✔]
         - Implement add_player and deal [x]
         - Continue from there [x]
     5. Add backend event handlers [x]
@@ -72,3 +72,4 @@ Distant Future:
 THINGS TO REMEMBER:
     - We are using /login route for both classic login, as well as session verification and set-up for game socket
         - This will need to be separated later when they aren't the same thing, or maybe cookies will take care of all this
+    - Check out Geocomply (it's a product) for IP compliance

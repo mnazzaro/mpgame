@@ -2,7 +2,7 @@ from ..factory import create_app
 
 import sys
 sys.path.append('../..')
-from mplib.model import util, model
+from mplib.model import models, util
 from mplib.auth import authentication
 
 from unittest import TestCase
@@ -35,7 +35,7 @@ class TestAuthenticationController (TestCase):
 
             with util.transaction() as session:
                 salt = authentication._generate_salt()
-                player = model.DBPlayer (
+                player = models.DBPlayer (
                     username='markn',
                     first_name='Mark',
                     last_name='Nazzaro',
