@@ -1,12 +1,12 @@
-from flask import request, Blueprint, current_app
+from flask import request, make_response, Blueprint, current_app
 from flask_cors import cross_origin
 
 from ..mpgameservices.model.player import Player
 
 import sys
 sys.path.append('..')
-from mplib.auth.auth_user import AuthUser
-from mplib.auth.authentication import try_login
+from mplib.auth.authentication import login as auth_login
+from mplib.auth.sessions.cookies import generate_cookie
 # from mplib.game.authorize import authorize_player_for_table
 
 blueprint = Blueprint('routes', __name__, '')
@@ -15,20 +15,15 @@ blueprint = Blueprint('routes', __name__, '')
 @cross_origin()
 def login ():
     # TODO: validate form
-    #try:
-        email = request.json['email']
-        password = request.json['password']
-        print (request.json)
-        result = try_login(AuthUser(email, password, None))
-        if result:
-            return {"result": True, "socketAddress": "http://127.0.0.1:5000"}, 200
-        else:
-            return {"result": False}, 403
-        
+    try:
+        with current_app.app_context():
+
+            token, session = auth_login (request.json)
+    except Exception as e:
+        return {"result": False}, 403 # TODO: Auth Failure 
+    
         # TODO: Add authorize_player_for_table when we move to cookies
-    # except Exception as e:
-    #     print (e)
-    #     return {"result": False}, 500
+    return {"result": True}, 200, {"access_token": token}
 
 
 @blueprint.route('/add', methods=['GET'])

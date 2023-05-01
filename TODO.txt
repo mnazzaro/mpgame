@@ -21,7 +21,7 @@ To-Do's (Old):
     6. Write tests :(
     7. Write frontend code so we can see it, demo, etc.
 
-To-Do's (March 16, 2023):
+To-Do's (Old):
     1. Add auth- it will be easier to test the game if we have real fake users in a db [✔]
         - Write the SQL [✔]
         - Connect SQLAlchemy to PostgreSQL [✔]
@@ -73,3 +73,24 @@ THINGS TO REMEMBER:
     - We are using /login route for both classic login, as well as session verification and set-up for game socket
         - This will need to be separated later when they aren't the same thing, or maybe cookies will take care of all this
     - Check out Geocomply (it's a product) for IP compliance
+
+
+To-Do's (April 20, 2023):
+    1. Fix auth [✔]
+        - UPDATE: We will implement refresh tokens later, for now, we have very long lived JWT access tokens for testing
+    2. Reassess Cloud Architecture [x]
+        - This is an open ended question, but ultimately we don't want to change this again.
+        - For one thing, we need to decide how decoupled we want to be. With a strong auth 
+          scheme, we can confidently implement an extremely loosely coupled architecture. We
+          should strive for an async, event-driven architecture, with a central message-
+          brokering cluster
+        - We need to remember that performance must be highest at our only state-based
+          component: the game socket.
+        - Current stance:
+            - Very micro microservices
+            - Cloud pub/sub
+    3. Make game service [x]
+        - Create serialization interface, likely a decorator that takes game_id and provides obj [x]
+        - Add Logic [x]
+            - ...
+

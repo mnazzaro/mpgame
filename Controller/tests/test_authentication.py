@@ -3,7 +3,8 @@ from ..factory import create_app
 import sys
 sys.path.append('../..')
 from mplib.model import models, util
-from mplib.auth import authentication
+from mplib.auth import authentication, passwords
+from mplib.auth.tokens.tokens import unpack_token
 
 from unittest import TestCase
 
@@ -19,6 +20,7 @@ class TestAuthenticationController (TestCase):
     def setUp (self):
         self.app = create_app() # Build plain flask app
         self.app.config['SECRET_KEY'] = 'super_secret_secret'
+        self.app.config['JWT_SECRET'] = 'other_secret'
         self.app.config['SERVICE_TYPE_FOR_AUTH'] = 'GAME'
         self.app.config['CELERY_RESULT_BACKEND'] = self.redis
         self.app.config['CELERY_BROKER_URL'] = self.redis
@@ -34,13 +36,13 @@ class TestAuthenticationController (TestCase):
             util.create_all()
 
             with util.transaction() as session:
-                salt = authentication._generate_salt()
+                salt = passwords._generate_salt()
                 player = models.DBPlayer (
                     username='markn',
                     first_name='Mark',
                     last_name='Nazzaro',
                     email='marknazzaro2@gmail.com',
-                    pass_hash=authentication._get_pass_hash('passw0rD!', salt),
+                    pass_hash=passwords._get_pass_hash('passw0rD!', salt),
                     salt=salt,
                     account_balance=200
                 )
@@ -61,8 +63,11 @@ class TestAuthenticationController (TestCase):
                     'email': 'marknazzaro2@gmail.com',
                     'password': 'passw0rD!'
                 })
-        self.assertEqual(response.status_code, 200, "Response status was not 200")
+        self.assertEqual(response.status_code, 200, response.json['result'])
         self.assertEqual(response.json['result'], True, "JSON result was not True")
+
+        session = unpack_token(response.headers.get('access_token', 'NO ACCESS TOKEN'), self.app.config['JWT_SECRET'])
+        self.assertEqual(session.user.user_id, 1, "user_id in token is incorrect")
 
     def test_login_wrong_pass (self):
         with self.app.app_context():
