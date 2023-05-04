@@ -94,3 +94,33 @@ To-Do's (April 20, 2023):
         - Add Logic [x]
             - ...
 
+To-Do's (May 1, 2023):
+    1. Create easy redis interface [✔]
+        - We need this for serialization and deserialization of hands, and eventually refresh token session stuff
+    2. Create simple shell script for deployment [✔] UPDATE: It's good enough lol. Don't need any extra stuff for now
+        - Start docker [x]
+        - Start game flask app [✔]
+            - Create test users [x]
+        - Start redis [x]
+        - Start celery [✔]
+        - Start mpfrontend [✔]
+        - Add options for easy temporary configuration [x]
+        - (Maybe) dockerize everything [x]
+    3. Make fully serializable poker hand object [x]
+        - Add features to stringify, etc for all poker actions [x]
+            - deal [x]
+            - bets [x]
+            - showdowns [x]
+            etc.
+        - Add validation for hands [x]
+            - fail when not possible, throw descriptive errors [x]
+            - May need keys with meta data about past actions [x]
+            - write tests to ensure soundness of critical game logic [x]
+    4. Make simple storage of hands in redis [x]
+        - Make one key for playing one game [x]
+        - Iterate on this simple design until we can serialize and deserialize a full game
+        - Plan: Check socket connection metadata for player id
+    5. Actually use RedisJSON [x]
+        - Don't remember why it doesn't work now, but eventually we will want it
+          Simple write as string, loads, dumps method is fine for now
+     

@@ -12,18 +12,16 @@ from mplib.auth.sessions.cookies import generate_cookie
 blueprint = Blueprint('routes', __name__, '')
 
 @blueprint.route('/login', methods=['POST'])
-@cross_origin()
+@cross_origin(expose_headers=['access_token'])
 def login ():
     # TODO: validate form
     try:
         with current_app.app_context():
-
             token, session = auth_login (request.json)
     except Exception as e:
         return {"result": False}, 403 # TODO: Auth Failure 
     
-        # TODO: Add authorize_player_for_table when we move to cookies
-    return {"result": True}, 200, {"access_token": token}
+    return {"result": True, "socketAddress": "http://127.0.0.1:5000"}, 200, {"access_token": token}
 
 
 @blueprint.route('/add', methods=['GET'])

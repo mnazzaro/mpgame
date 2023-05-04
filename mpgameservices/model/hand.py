@@ -1,24 +1,28 @@
-from typing import List, Generator, Tuple
+from typing import List, Generator, Tuple, Optional
 from pokerface import Stakes, NoLimitTexasHoldEm, PokerPlayer, Card, PokerNature
 from .player import Player
 
 class Hand:
 
-    def __init__ (self, betting_order: List[Player], sb: float, bb: float, ante: float, actions: List[str]):
+    def __init__ (self, betting_order: List[Player], sb: float, bb: float, ante: float, actions: Optional[List[str]] = None):
         # Just assume NL Texas Holdem for now
         self._game = NoLimitTexasHoldEm(Stakes(ante, (sb, bb)), Hand._get_stacks(betting_order))
         self._index_player_map = dict(zip(list(range(len(betting_order))), betting_order))
-        self._actions_string = actions
-        self._game.act(*actions)
+        if actions is not None:
+            self._actions_string = actions
+            self._game.act(*actions)
+        else:
+            self._actions_string = []
 
     # STATIC METHODS
     def _get_stacks (players: List[Player]) -> List[float]:
-        return tuple(map(lambda player: player.stack))
+        return tuple(map(lambda player: player.stack, players))
 
     # CLASS METHODS
     def _player_from_index (self, index):
         return self._index_player_map.get(index)
     
+    @property
     def check_call_amount (self) -> float:
         return self.current_actor().check_call_amount
     
@@ -52,19 +56,38 @@ class Hand:
             yield holes
 
     def deal_board (self) -> List[Card]:
+        board_length_before = len(self._game.board)
         self._game.nature.deal_board()
+        board_length = len(self._game.board)
+        new_additions = ''.join(
+            list(
+                map(
+                    lambda card: str(card),
+                    self._game.board[board_length_before - board_length:]
+                    )
+                )
+            )
+            
+        self._actions_string.append(f'db {new_additions}' )
         return self._game.board
     
     def fold (self):
         self.current_actor().fold()
+        self._actions_string.append('f')
 
     def bet (self, amount: float):
         player = self.current_actor()
 
         if amount == self.check_call_amount():
             player.check_call()
+            self._actions_string.append('cc')
         else:
             player.bet_raise(amount)
+            self._actions_string.append(f'br {amount}')
+
+    def check_call (self):
+        self.current_actor().check_call()
+        self._actions_string.append('cc')
 
     def get_actions (self) -> List[str]:
         return self._actions_string
