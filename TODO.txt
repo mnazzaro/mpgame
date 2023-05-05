@@ -107,9 +107,9 @@ To-Do's (May 1, 2023):
         - Add options for easy temporary configuration [x]
         - (Maybe) dockerize everything [x]
     3. Make fully serializable poker hand object [x]
-        - Add features to stringify, etc for all poker actions [x]
-            - deal [x]
-            - bets [x]
+        - Add features to stringify, etc for all poker actions [✔]
+            - deal [✔]
+            - bets [✔]
             - showdowns [x]
             etc.
         - Add validation for hands [x]
@@ -117,10 +117,35 @@ To-Do's (May 1, 2023):
             - May need keys with meta data about past actions [x]
             - write tests to ensure soundness of critical game logic [x]
     4. Make simple storage of hands in redis [x]
-        - Make one key for playing one game [x]
+        - Make one key for playing one game [✔]
         - Iterate on this simple design until we can serialize and deserialize a full game
         - Plan: Check socket connection metadata for player id
     5. Actually use RedisJSON [x]
         - Don't remember why it doesn't work now, but eventually we will want it
           Simple write as string, loads, dumps method is fine for now
      
+
+To-Do's (May 4, 2023):
+    1. Dockerize the mpgame and celery processes, preferrably separately [x]
+        - Add setup.py so we can pip install mpgame
+        - Add git permissions so we can clone mpgame
+        - Debug til it works
+    2. Verify that the docker instance integrates with mpfrontend
+        - Make sure the whole login/join process works as before
+        - Get to the point that connect event fires seemlessly with auth
+    3. Write core game logic
+        - The legs are there for creating a very simple demo.
+          We know how the celery/broker/socket thing works,
+          so we just need to write all the appropriate routes
+        - Follow through on this until we have a simple demo
+        - There may be hiccups, we reevaluate then
+    4. Iterate over the TODO's:
+        - There are many spots where we said we would fix it later
+        - There are many [x]'s still in this document
+          that are best practices we skipped over and need to be 
+          done
+        - These need to be fixed. Let's make our architecture sound
+        - Write tests while going over this
+        - Reach 90% test coverage
+    5. Make it a little prettier, within reason
+        - We will still need a UX designer
