@@ -24,14 +24,11 @@ RUN python -m pip install flask Flask-SocketIO flask_CORS celery
 RUN python -m pip install gunicorn==20.1.0
 RUN python -m pip install eventlet==0.30.2
 
-RUN mkdir mpgame
+RUN git clone https://github.com/mnazzaro/mpgame
 WORKDIR /source/mpgame
-
-COPY . .
+RUN python -m pip install .
 
 ########## Start Gunicorn ##########
-
-WORKDIR /source/mpgame
 
 CMD ["gunicorn", "--bind", "0.0.0.0:5000", "-k", "eventlet", "-w", "1", "entry_point:sio"]
 

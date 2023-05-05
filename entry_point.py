@@ -1,7 +1,7 @@
 import sys
 # from create_test_users import create_test_users
 
-from Controller.factory import create_app
+from mpgame.Controller.factory import create_app
 
 sio, app = create_app()
 
