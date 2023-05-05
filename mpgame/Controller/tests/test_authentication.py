@@ -12,7 +12,7 @@ class TestAuthenticationController (TestCase):
 
     @classmethod
     def setUpClass (self):
-        self.redis = 'redis://127.0.0.1:6379'
+        self.redis = 'redis://host.docker.internal:6379'
         self.db = 'postgresql://test:test@localhost/mpdb'
         self.expiry = 500
 

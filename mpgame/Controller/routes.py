@@ -21,7 +21,7 @@ def login ():
     except Exception as e:
         return {"result": False}, 403 # TODO: Auth Failure 
     
-    return {"result": True, "socketAddress": "http://127.0.0.1:5000"}, 200, {"access_token": token}
+    return {"result": True, "socketAddress": "http://172.17.0.1:5000"}, 200, {"access_token": token}
 
 
 @blueprint.route('/add', methods=['GET'])
