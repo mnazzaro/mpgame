@@ -5,12 +5,10 @@ from flask_socketio import SocketIO
 
 from ..CeleryProcesses.celery_factory import create_celery
 
-import sys
-sys.path.append('../..')
-from mplib.mplib.auth import Auth
-from mplib.mplib.auth.middlewares.token_auth_middleware import TokenAuthMiddleware
-from mplib.mplib.model.util import create_all, drop_all
-from mplib.mplib.base import wrap
+from mplib.auth import Auth
+from mplib.auth.middlewares.token_auth_middleware import TokenAuthMiddleware
+from mplib.model.util import create_all, drop_all
+from mplib.base import wrap
 
 from .events import blueprint as events_bp
 from .routes import blueprint as routes_bp

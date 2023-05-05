@@ -10,23 +10,27 @@ RUN python -m pip install --upgrade pip
 
 WORKDIR /lib
 
+RUN rm -rf /lib/mplib
 RUN git clone https://github.com/mnazzaro/mplib
 WORKDIR /lib/mplib
 RUN git checkout new-auth
-RUN python -m pip install .
+RUN python setup.py install
 
 ########## Install mpgame ###########
 
 WORKDIR /source
 
 # Install dependencies
-RUN python -m pip install flask Flask-SocketIO flask_CORS celery
 RUN python -m pip install gunicorn==20.1.0
 RUN python -m pip install eventlet==0.30.2
 
+ENV MPGAME_COMMIT=f3a481d4a64af3f32a7eff88ecdbb381530ceb86
+
+RUN rm -rf /source/mpgame
 RUN git clone https://github.com/mnazzaro/mpgame
 WORKDIR /source/mpgame
-RUN python -m pip install .
+RUN git reset --hard $MPGAME_COMMIT
+RUN python setup.py install
 
 ########## Start Gunicorn ##########
 

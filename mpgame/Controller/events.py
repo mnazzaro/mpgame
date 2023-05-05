@@ -12,11 +12,11 @@ import logging
 
 from .socket_blueprint import SocketBlueprint
 
-from mplib.mplib.auth.authenticate import authenticate_token
-from mplib.mplib.auth.exceptions import MalformedTokenError, \
+from mplib.auth.authenticate import authenticate_token
+from mplib.auth.exceptions import MalformedTokenError, \
     AuthenticationFailureError, ExpiredTokenError
-from mplib.mplib.game.authorize import authorize_player_for_table
-from mplib.mplib.model.domain import Session
+from mplib.game.authorize import authorize_player_for_table
+from mplib.model.domain import Session
 
 from ..mpgameservices.model.player import Player
 

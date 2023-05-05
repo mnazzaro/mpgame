@@ -2,9 +2,9 @@ from ..factory import create_app
 
 import sys
 sys.path.append('../..')
-from mplib.mplib.model import models, util
-from mplib.mplib.auth import authentication, passwords
-from mplib.mplib.auth.tokens.tokens import unpack_token
+from mplib.model import models, util
+from mplib.auth import authentication, passwords
+from mplib.auth.tokens.tokens import unpack_token
 
 from unittest import TestCase
 
