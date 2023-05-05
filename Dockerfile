@@ -28,7 +28,7 @@ RUN python -m pip install eventlet==0.30.2
 RUN python -m pip install psycopg2
 
 
-ENV MPGAME_COMMIT=718273e57756228dfaeb960bbbc5815f13e8a7b9
+ENV MPGAME_COMMIT=deb72ec067f043a84b91b71c7bd70c2af8e22f48
 
 RUN rm -rf /source/mpgame
 RUN git clone https://github.com/mnazzaro/mpgame
