@@ -10,4 +10,4 @@ if __name__ == '__main__':
     #     '--test' in sys.argv or \
     #     '-t' in sys.argv:
     #         create_test_users(app)
-    sio.run(app, debug=False)
+    sio.run(app, debug=False, host='0.0.0.0')
