@@ -3,7 +3,6 @@ from typing import Tuple
 from flask import Flask
 from flask_socketio import SocketIO
 
-import eventlet
 
 from ..CeleryProcesses.celery_factory import create_celery
 
@@ -17,7 +16,6 @@ from .routes import blueprint as routes_bp
 
 
 def create_app(config_path: str = None) -> Tuple[SocketIO, Flask]:
-    eventlet.monkey_patch()
     app = Flask(__name__)
     app.config.from_pyfile(
         config_path if config_path

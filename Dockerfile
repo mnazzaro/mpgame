@@ -28,7 +28,7 @@ RUN python -m pip install eventlet==0.30.2
 RUN python -m pip install psycopg2
 
 
-ENV MPGAME_COMMIT=f865e6041d89dec188586ba2253320f755c47209
+ENV MPGAME_COMMIT=f99157fb3e8b7efaa7b4268ec33d09d2868c9483
 
 RUN rm -rf /source/mpgame
 RUN git clone https://github.com/mnazzaro/mpgame
@@ -38,5 +38,5 @@ RUN python setup.py install
 
 ########## Start Gunicorn ##########
 
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--worker-class", "eventlet",  "--w", "2", "entry_point:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--worker-class", "eventlet",  "-w", "2", "entry_point:app"]
 
