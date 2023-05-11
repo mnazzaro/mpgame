@@ -23,11 +23,11 @@ def create_app(config_path: str = None) -> Tuple[SocketIO, Flask]:
 
     print(app.config['SERVICE_TYPE_FOR_AUTH'])
 
-    Auth(app)
+    # Auth(app)
 
     sio = SocketIO(
         app,
-        cors_allowed_origins=["http://127.0.0.1:3000", "http://127.0.0.1:5000", "http://localhost:3000"],
+        cors_allowed_origins=["http://127.0.0.1:3000", "http://127.0.0.1:5000", "http://localhost:3000"], # TODO: Sec Vuln
         message_queue=app.config.get('REDIS_URI'),
     )  # TODO: This will not fly in prod. Should be okay for now because we will work on that logic in the pairing service later
 
@@ -37,7 +37,7 @@ def create_app(config_path: str = None) -> Tuple[SocketIO, Flask]:
     celery = create_celery(app)
     app.celery = celery
 
-    wrap(app, [TokenAuthMiddleware])
+    # wrap(app, [TokenAuthMiddleware])
 
     if app.config.get('CREATE_DB'):
         with app.app_context():
