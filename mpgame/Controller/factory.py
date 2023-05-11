@@ -23,7 +23,7 @@ def create_app(config_path: str = None) -> Tuple[SocketIO, Flask]:
 
     print(app.config['SERVICE_TYPE_FOR_AUTH'])
 
-    # Auth(app)
+    Auth(app)
 
     sio = SocketIO(
         app,
