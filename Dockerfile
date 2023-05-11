@@ -10,7 +10,7 @@ RUN python -m pip install --upgrade pip
 
 WORKDIR /lib
 
-ENV MPLIB_COMMIT=b908987a6bbecfd914cfedb1122b22cf74828a0f
+ENV MPLIB_COMMIT=8ba0b29f1da0d08618e94cf927dc872af4cbe831
 
 RUN rm -rf /lib/mplib
 RUN git clone https://github.com/mnazzaro/mplib
@@ -28,7 +28,7 @@ RUN python -m pip install eventlet==0.30.2
 RUN python -m pip install psycopg2
 
 
-ENV MPGAME_COMMIT=23f4bb442047c5b7470eac952c5dc462447523d3
+ENV MPGAME_COMMIT=57215d87ebc54be1d802c767cee0f8a856bc521a
 
 RUN rm -rf /source/mpgame
 RUN git clone https://github.com/mnazzaro/mpgame
@@ -38,5 +38,5 @@ RUN python setup.py install
 
 ########## Start Gunicorn ##########
 
-CMD ["gunicorn", "--bind", "127.0.0.1:5000", "-k", "eventlet", "--threads", "20", "entry_point:app"]
+CMD ["gunicorn", "--bind", "127.0.0.1:5000", "--threads", "2", "entry_point:app"]
 
