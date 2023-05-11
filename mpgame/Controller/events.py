@@ -43,7 +43,7 @@ def _get_game_id () -> int:
 
 
 @blueprint.on('connect')
-def connect (auth, data):
+def connect (): # TODO: auth, data
     print ("OK CONNECT GETS CALLED")
     # if auth is not None and \
     #     auth.get('token') is not None:
