@@ -27,7 +27,7 @@ def create_app(config_path: str = None) -> Tuple[SocketIO, Flask]:
 
     sio = SocketIO(
         app,
-        cors_allowed_origins=["http://127.0.0.1:3000", "http://127.0.0.1:5000"],
+        cors_allowed_origins=["http://127.0.0.1:3000", "http://127.0.0.1:5000", "http://localhost:3000"],
         message_queue=app.config.get('REDIS_URI'),
     )  # TODO: This will not fly in prod. Should be okay for now because we will work on that logic in the pairing service later
 
