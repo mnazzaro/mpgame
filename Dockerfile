@@ -2,7 +2,7 @@
 
 FROM python:3.9-buster
 
-RUN apt-get update
+RUN apt-get update & apt-get install git
 RUN python -m pip install --upgrade pip
 
 
@@ -10,11 +10,13 @@ RUN python -m pip install --upgrade pip
 
 WORKDIR /lib
 
+ENV MPLIB_COMMIT=8ba0b29f1da0d08618e94cf927dc872af4cbe831
+
 RUN rm -rf /lib/mplib
 RUN git clone https://github.com/mnazzaro/mplib
 WORKDIR /lib/mplib
-RUN git checkout new-auth
-RUN python setup.py install
+RUN git reset --hard $MPLIB_COMMIT
+RUN python -m pip install -e .
 
 ########## Install mpgame ###########
 
@@ -23,8 +25,10 @@ WORKDIR /source
 # Install dependencies
 RUN python -m pip install gunicorn==20.1.0
 RUN python -m pip install eventlet==0.30.2
+RUN python -m pip install psycopg2
 
-ENV MPGAME_COMMIT=f3a481d4a64af3f32a7eff88ecdbb381530ceb86
+
+ENV MPGAME_COMMIT=58a98cc3ce5795151d909aadaf0122cce3a8973b
 
 RUN rm -rf /source/mpgame
 RUN git clone https://github.com/mnazzaro/mpgame
@@ -34,5 +38,5 @@ RUN python setup.py install
 
 ########## Start Gunicorn ##########
 
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "-k", "eventlet", "-w", "1", "entry_point:sio"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "--worker-class", "eventlet",  "-w", "2", "entry_point:app"]
 

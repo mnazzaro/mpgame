@@ -43,33 +43,33 @@ def _get_game_id () -> int:
 
 
 @blueprint.on('connect')
-def connect (auth, data):
+def connect (): # TODO: auth, data
     print ("OK CONNECT GETS CALLED")
-    if auth is not None and \
-        auth.get('token') is not None:
-        try:
-            session: Session = authenticate_token(auth.token, current_app.config.get('JWT_SECRET'))
-            if not authorize_player_for_table(session.user.user_id, _get_game_id()):
-                raise AuthenticationFailureError(f"Player {session.user.user_id} not authorized for table {_get_game_id()}")
-        except ExpiredTokenError as e:
-            # TODO: Issue request for refresh or something
-            raise ConnectionRefusedError from e
-        except AuthenticationFailureError as e:
-            raise ConnectionRefusedError from e
-        except ValueError as e:
-            raise ConnectionRefusedError from e
-        except Exception as e:
-            raise ConnectionRefusedError from e
-    else:
-        raise ConnectionRefusedError ('No auth data passed')
+    # if auth is not None and \
+    #     auth.get('token') is not None:
+    #     try:
+    #         session: Session = authenticate_token(auth.token, current_app.config.get('JWT_SECRET'))
+    #         if not authorize_player_for_table(session.user.user_id, _get_game_id()):
+    #             raise AuthenticationFailureError(f"Player {session.user.user_id} not authorized for table {_get_game_id()}")
+    #     except ExpiredTokenError as e:
+    #         # TODO: Issue request for refresh or something
+    #         raise ConnectionRefusedError from e
+    #     except AuthenticationFailureError as e:
+    #         raise ConnectionRefusedError from e
+    #     except ValueError as e:
+    #         raise ConnectionRefusedError from e
+    #     except Exception as e:
+    #         raise ConnectionRefusedError from e
+    # else:
+    #     raise ConnectionRefusedError ('No auth data passed')
     
-    if data.get('stack') is not None:
-        result = current_app.celery.send_task('game.add_player', args=[Player(session.user.user_id, data['stack']).serialize()])
-    else:
-        raise ConnectionRefusedError ('No stack information provided')
+    # if data.get('stack') is not None:
+    #     result = current_app.celery.send_task('game.add_player', args=[Player(session.user.user_id, data['stack']).serialize()])
+    # else:
+    #     raise ConnectionRefusedError ('No stack information provided')
     
-    # TODO: Return figure out return scheme for events
-    players = result.get()
+    # # TODO: Return figure out return scheme for events
+    # players = result.get()
 
     
 

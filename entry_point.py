@@ -1,3 +1,6 @@
+import eventlet
+eventlet.monkey_patch()
+
 import sys
 # from create_test_users import create_test_users
 
@@ -10,4 +13,4 @@ if __name__ == '__main__':
     #     '--test' in sys.argv or \
     #     '-t' in sys.argv:
     #         create_test_users(app)
-    sio.run(app, debug=False)
+    sio.run(app, debug=False, host='127.0.0.1')

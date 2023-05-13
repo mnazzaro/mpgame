@@ -18,7 +18,7 @@ from typing import Callable, Dict
 
 # redis = redis.StrictRedis(host='127.0.0.1', port=6379, db=0)
 redis = MemoryStore(
-    host='127.0.0.1',
+    host='host.docker.internal',
     port=6379
 )
 

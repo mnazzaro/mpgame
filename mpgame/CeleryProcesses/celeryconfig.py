@@ -1,2 +1,2 @@
-broker_url = 'redis://127.0.0.1:6379'
-result_backend = 'redis://127.0.0.1:6379'
+broker_url = 'redis://host.docker.internal:6379'
+result_backend = 'redis://host.docker.internal:6379'
