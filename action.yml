@@ -1,0 +1,16 @@
+# action.yml
+name: 'Build Dev'
+description: 'Build specific branch of repo'
+inputs:
+  branch:  # id of input
+    description: 'Who to greet'
+    required: false
+    default: 'develop'
+# outputs:
+#   time: # id of output
+#     description: 'The time we greeted you'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.branch }}
